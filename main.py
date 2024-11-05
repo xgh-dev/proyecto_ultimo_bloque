@@ -1,6 +1,7 @@
-from validaciones import validar_usuario_id,validar_nombre_usuario,validar_tamaño
+from validaciones import validar_tamaño
 from clases.clase_video import Video
-from clases.clase_usuario import Usuario
+from clases.clase_usuario import Usuario,capturarId,capturarNombre
+
 
 datos = []
 
@@ -27,64 +28,52 @@ class Mis_Videos_Online():
             else:
                 print("Seleccione una opción a realizar")
     def acceso(self):
-        usuario_id = ""
-        usuario_nombre = ""
+        usuario_id = capturarId()
+        usuario_nombre = capturarNombre()
+        
         cantidad_de_videos = 0
-        while True:
-            usuario_id = input("Ingrese su id: ")
-            if validar_usuario_id(usuario_id) == True:
-                break
-        while True:
-            usuario_nombre = input("Ingrese su nombre: ")
-            if validar_nombre_usuario(usuario_nombre) == True:
-                break
         while True:
             cantidad_de_videos = int(input("Ingrese la cantidad de videos a subir (no mayor a 3): "))
             if cantidad_de_videos > 0 and cantidad_de_videos < 4:
                 break
             #cantidad_de_videos = int(input("Ingrese la cantidad de videos a subir (no mayor a 3): "))
         #print(f"hola {usuario_nombre}, su id es {usuario_id}, la cantidad de videos que subira es {cantidad_de_videos}")
-        print(f"hola {usuario_nombre}, su id es {usuario_id}, la cantidad de videos que subira es {cantidad_de_videos}")
-        print("""
-            La información es correcta: 
-                  1) Si
-                  2) No
-                  """)
-        comprobacion = int(input("Indique su opción: "))
-        if comprobacion == 1:
-            self.ingresarVideos(usuario_id,usuario_nombre,cantidad_de_videos)
-        elif comprobacion == 2:
-            while True:
-                print("""
-                    Indique el dato que quiere cambiar:
-                        1) Nombre
-                        2) Cantidad de videos
-                        3) Salir
-                          """)
-                opcion = int(input("Indique la opción a realizar: "))
-                if opcion == 1:
-                    while True:
-                        usuario_nombre = input("Ingrese su nombre: ")
-                        if validar_nombre_usuario(usuario_nombre) == True:
-                            print(f"Nombre actualizado: {usuario_nombre}")
-                            break
-                        elif opcion == 2:
-                            while True:
-                                cantidad_de_videos = int(input("Ingrese la cantidad de videos a subir (no mayor a 3): "))
-                                if cantidad_de_videos > 0 and cantidad_de_videos < 4:
-                                    print(f"Cantidad actualizada: {cantidad_de_videos}")
-                                    break
-                        elif opcion == 3:
-                            break
-                        else:
-                            print("Indique la opción valida")
-                else:
-                    print("Seleccione una opción valida")
-    def ingresarVideos(self,id,nombre,cantidad):
+        while True:
+            print(f"hola {usuario_nombre}, su id es {usuario_id}, la cantidad de videos que subira es {cantidad_de_videos}")
+            print("""
+                La información es correcta: 
+                    1) Si
+                    2) No
+                    """)
+            comprobacion = int(input("Indique su opción: "))
+            if comprobacion == 1:
+                break
+            elif comprobacion == 2:
+                while True:
+                    print("""
+                        Indique el dato que quiere cambiar:
+                            1) Nombre
+                            2) Cantidad de videos
+                            3) Salir
+                            """)
+                    opcion = int(input("Indique la opción a realizar: "))
+                    if opcion == 1:
+                        usuario_nombre = capturarNombre()
+                    elif opcion == 2:
+                        while True:
+                            cantidad_de_videos = int(input("Ingrese la cantidad de videos a subir (no mayor a 3): "))
+                            if cantidad_de_videos > 0 and cantidad_de_videos < 4:
+                                break
+                    elif opcion == 3:
+                        break
+        claseUsuario = Usuario(usuario_id,usuario_nombre)
+        self.ingresarVideos(claseUsuario,cantidad_de_videos)
+            
+    def ingresarVideos(self,claseUsuario,cantidad):
         print("Ingrese los videos")
         objeto = {
-            "id": id,
-            "nombre": nombre,
+            "id": claseUsuario.mostrarID(),
+            "nombre": claseUsuario.mostrarNombre(),
             "videos": []
         }
         for i in range(cantidad):
