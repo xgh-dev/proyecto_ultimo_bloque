@@ -3,10 +3,11 @@ from clases.clase_video import Video
 from clases.clase_usuario import Usuario,capturarId,capturarNombre
 
 
-datos = []
+#datos = []
 
 class Mis_Videos_Online():
     def __init__(self):
+        self.datos = []
         self.iniciarPrograma()
     def iniciarPrograma(self):
         print("Iniciando el programa")
@@ -88,15 +89,15 @@ class Mis_Videos_Online():
                     break
             video = Video(nombre_del_video,ruta_del_video, tamaño_del_video)
             objeto["videos"].append(video)
-        datos.append(objeto)
+        self.datos.append(objeto)
     def mostrarRegistros(self):
-        for dato in datos:
+        for dato in self.datos:
             print("-" * 40)
             print(f"ID: {dato['id']}")
             print(f"Nombre: {dato['nombre']}")
             for video in dato['videos']:
                 print(video)
-            print("-" * 40)
+            #print("-" * 40)
        
     
 iniciarProgramacion = Mis_Videos_Online()
